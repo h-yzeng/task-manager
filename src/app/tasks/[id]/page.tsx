@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { executeQuery } from '@/lib/db';
 import { Task } from '@/lib/db/schema';
-import DeleteTaskButton from './DeleteTaskButton';
+import DeleteTaskButton from '../../../components/DeleteTaskButton';
 
 export const dynamic = 'force-dynamic';
 
