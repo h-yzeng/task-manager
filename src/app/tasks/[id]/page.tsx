@@ -1,4 +1,3 @@
-// src/app/tasks/[id]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import DeleteTaskButton from "@/components/DeleteTaskButton";
@@ -12,7 +11,7 @@ interface TaskDetailProps {
 export default async function TaskDetailPage(
   props: TaskDetailProps
 ) {
-  // Await the props object and then await params to get the id
+
   const { params } = props;
   const { id } = await params;
 
