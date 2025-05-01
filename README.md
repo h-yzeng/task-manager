@@ -48,7 +48,7 @@ A full-stack task management application built with Next.js 15, TypeScript, Tail
 
 ### Database Setup
 
-The application automatically initializes the database with the necessary tables when it starts. If you need to manually initialize the database, you can visit the /api/init endpoint in your browser.
+The application automatically initializes the database with the necessary tables when it starts. If you need to manually initialize the database, you can visit the `/api/init` endpoint in your browser.
 
 ## Deployment
 
