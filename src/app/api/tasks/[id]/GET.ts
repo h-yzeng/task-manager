@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { executeQuery } from '@/lib/db';
 
-export async function GET(
+export default async function handler(
   request: NextRequest,
   context: { params: { id: string } }
 ) {
@@ -19,3 +19,5 @@ export async function GET(
     return NextResponse.json({ error: 'Failed to fetch task' }, { status: 500 });
   }
 }
+
+export const GET = handler;

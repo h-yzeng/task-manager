@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { executeQuery } from '@/lib/db';
 
-export async function DELETE(
+export default async function handler(
   request: NextRequest,
   context: { params: { id: string } }
 ) {
@@ -19,3 +19,5 @@ export async function DELETE(
     return NextResponse.json({ error: 'Failed to delete task' }, { status: 500 });
   }
 }
+
+export const DELETE = handler;
