@@ -1,15 +1,20 @@
+// src/app/tasks/[id]/page.tsx
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import DeleteTaskButton from "@/components/DeleteTaskButton";
 import { executeQuery } from "@/lib/db";
 import { Task } from "@/lib/db/schema";
 
-export default async function TaskDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const id = params.id;
+interface TaskDetailProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function TaskDetailPage(
+  props: TaskDetailProps
+) {
+  // Await the props object and then await params to get the id
+  const { params } = props;
+  const { id } = await params;
 
   const result = await executeQuery(
     "SELECT * FROM tasks WHERE id = $1",
