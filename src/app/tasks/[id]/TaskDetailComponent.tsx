@@ -10,9 +10,12 @@ export default function TaskDetailComponent({ task }: TaskDetailComponentProps) 
   const formatDate = (d: Date | null) =>
     d ? new Date(d).toLocaleString() : "Not set";
 
+  const getTaskStatus = (): string => {
+    return task.completed ? "completed" : "not_started";
+  };
+
   const statusStyles: { [key: string]: string } = {
     completed: "bg-green-100 text-green-800 border-green-200",
-    in_progress: "bg-blue-100 text-blue-800 border-blue-200",
     not_started: "bg-gray-100 text-gray-700 border-gray-200"
   };
 
@@ -66,9 +69,9 @@ export default function TaskDetailComponent({ task }: TaskDetailComponentProps) 
         
         {/* Status and priority badges */}
         <div className="flex flex-wrap gap-3 px-8 py-4 bg-gray-50 border-b border-gray-200">
-          <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border ${getStatusStyle(task.status)}`}>
-            <span className={`w-2 h-2 rounded-full mr-2 ${task.status === "completed" ? "bg-green-500" : task.status === "in_progress" ? "bg-blue-500" : "bg-gray-500"}`}></span>
-            {task.status.replace("_", " ")}
+          <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border ${getStatusStyle(getTaskStatus())}`}>
+            <span className={`w-2 h-2 rounded-full mr-2 ${getTaskStatus() === "completed" ? "bg-green-500" : "bg-gray-500"}`}></span>
+            {getTaskStatus().replace("_", " ")}
           </span>
           <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border ${getPriorityStyle(task.priority)}`}>
             {task.priority === "high" && (
@@ -130,7 +133,7 @@ export default function TaskDetailComponent({ task }: TaskDetailComponentProps) 
                   <span className="ml-3 text-sm font-semibold text-gray-700 uppercase tracking-wide">Due Date</span>
                 </div>
                 <span className="font-medium text-lg text-gray-900">
-                  {formatDate(task.due_date)}
+                  {formatDate(task.dueDate)}
                 </span>
               </div>
               
@@ -144,7 +147,7 @@ export default function TaskDetailComponent({ task }: TaskDetailComponentProps) 
                   <span className="ml-3 text-sm font-semibold text-gray-700 uppercase tracking-wide">Created</span>
                 </div>
                 <span className="font-medium text-lg text-gray-900">
-                  {formatDate(task.created_at)}
+                  {formatDate(task.createdAt)}
                 </span>
               </div>
               
@@ -158,7 +161,7 @@ export default function TaskDetailComponent({ task }: TaskDetailComponentProps) 
                   <span className="ml-3 text-sm font-semibold text-gray-700 uppercase tracking-wide">Last Updated</span>
                 </div>
                 <span className="font-medium text-lg text-gray-900">
-                  {formatDate(task.updated_at)}
+                  {formatDate(task.updatedAt)}
                 </span>
               </div>
             </div>
