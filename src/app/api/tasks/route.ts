@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = session.user.id;
+    const userId = parseInt(session.user.id);
     const { searchParams } = new URL(request.url);
 
     // Get filter params
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
-    const userId = session.user.id;
+    const userId = parseInt(session.user.id);
 
     const [newTask] = await db
       .insert(schema.tasks)
