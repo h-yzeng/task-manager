@@ -23,12 +23,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           if (existingUser.length === 0) {
             // Create new user
-            await db.insert(schema.users).values({
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              githubId: account.providerAccountId,
-            });
+            const [newUser] = await db
+              .insert(schema.users)
+              .values({
+                name: user.name,
+                email: user.email,
+                image: user.image,
+                githubId: account.providerAccountId,
+              })
+              .returning();
+
+            // Create default categories for new user
+            const defaultCategories = [
+              { name: "Work", color: "#3b82f6", icon: "💼" },
+              { name: "Personal", color: "#10b981", icon: "🏠" },
+              { name: "Shopping", color: "#f59e0b", icon: "🛒" },
+              { name: "Health", color: "#ef4444", icon: "❤️" },
+              { name: "Learning", color: "#8b5cf6", icon: "📚" },
+            ];
+
+            await db.insert(schema.categories).values(
+              defaultCategories.map((cat) => ({
+                ...cat,
+                userId: newUser.id,
+              }))
+            );
           } else {
             // Update existing user
             await db

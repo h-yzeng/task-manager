@@ -57,7 +57,21 @@ export default function HomePage() {
       const res = await fetch("/api/categories");
       if (res.ok) {
         const data = await res.json();
-        setCategories(data.categories || []);
+        const cats = data.categories || [];
+        setCategories(cats);
+        
+        // Auto-initialize categories if user has none
+        if (cats.length === 0) {
+          const initRes = await fetch("/api/init", { method: "POST" });
+          if (initRes.ok) {
+            // Fetch again to get the newly created categories
+            const newRes = await fetch("/api/categories");
+            if (newRes.ok) {
+              const newData = await newRes.json();
+              setCategories(newData.categories || []);
+            }
+          }
+        }
       } else if (res.status === 401) {
         // User needs to sign in again
         router.push("/auth/signin");

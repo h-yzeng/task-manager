@@ -20,6 +20,17 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Category } from "@/types";
 
+const getCategoryColorClass = (color?: string | null) => {
+  const colorMap: Record<string, string> = {
+    "#3b82f6": "bg-blue-500",
+    "#10b981": "bg-green-500",
+    "#f59e0b": "bg-amber-500",
+    "#ef4444": "bg-red-500",
+    "#8b5cf6": "bg-purple-500",
+  };
+  return colorMap[color || ""] || "bg-gray-500";
+};
+
 export default function EditTaskPage() {
   const router = useRouter();
   const { id } = useParams();
@@ -221,22 +232,25 @@ export default function EditTaskPage() {
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
                   <Select
-                    value={formData.categoryId}
+                    value={formData.categoryId || "none"}
                     onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, categoryId: value }))
+                      setFormData((prev) => ({ 
+                        ...prev, 
+                        categoryId: value === "none" ? "" : value 
+                      }))
                     }
                   >
                     <SelectTrigger id="category">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="none">No category</SelectItem>
                       {categories.map((category) => (
                         <SelectItem key={category.id} value={category.id}>
                           <div className="flex items-center gap-2">
                             {category.color && (
                               <div
-                                className="h-3 w-3 rounded-full"
-                                style={{ backgroundColor: category.color }}
+                                className={`h-3 w-3 rounded-full ${getCategoryColorClass(category.color)}`}
                               />
                             )}
                             {category.name}
