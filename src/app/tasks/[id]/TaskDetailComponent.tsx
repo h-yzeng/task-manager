@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DeleteTaskButton from "@/components/DeleteTaskButton";
+import DeleteTaskButton from "@/components/tasks/delete-task-button";
 import { Task } from "@/lib/db/schema";
 
 interface TaskDetailComponentProps {
