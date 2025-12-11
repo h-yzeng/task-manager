@@ -57,12 +57,15 @@ export default function HomePage() {
       const res = await fetch("/api/categories");
       if (res.ok) {
         const data = await res.json();
-        setCategories(data);
+        setCategories(data.categories || []);
+      } else if (res.status === 401) {
+        // User needs to sign in again
+        router.push("/auth/signin");
       }
     } catch (error) {
       console.error("Failed to fetch categories:", error);
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (status === "authenticated") {
